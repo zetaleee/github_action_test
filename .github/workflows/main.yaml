@@ -5,28 +5,21 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🎉 触发事件：${{ github.event_name }} 运行环境： ${{ runner.os }} 分支：${{ github.ref }} 仓库：${{ github.repository }}"
       
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      
-      - name: Check out repository code
+      - name: 拉取代码
         uses: actions/checkout@v4
       
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      
-      - name: List files in the repository
+      - name: 打印文件
         run: |
           ls ${{ github.workspace }}
-      
-      - run: echo "🍏 This job's status is ${{ job.status }}."
 
-      - name: Deploy to GitHub Pages
+      - name: 部署到 GitHub Pages
         uses: JamesIves/github-pages-deploy-action@releases/v4
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}  # 在你的 GitHub 仓库的 Settings -> Secrets 中添加名为 ACCESS_TOKEN 的 secret，该 token 需要有 repo 权限
           BRANCH: gh-pages  # 可以指定要部署到的分支
           FOLDER: .  # 你的 index.html 文件所在的文件夹
+
+      - run: echo "🍏 This job's status is ${{ job.status }}."
+      
